@@ -1,0 +1,28 @@
+{
+  "name": "techba-nodejs-back-end-proyecto-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucianoPesqueira/techba-nodejs-back-end-proyecto-final.git"
+  },
+  "keywords": [],
+  "author": "Luciano Nicolas Pesqueira",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/LucianoPesqueira/techba-nodejs-back-end-proyecto-final/issues"
+  },
+  "homepage": "https://github.com/LucianoPesqueira/techba-nodejs-back-end-proyecto-final#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "firebase": "^12.15.0"
+  }
+}
