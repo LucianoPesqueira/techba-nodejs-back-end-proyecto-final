@@ -16,75 +16,105 @@ const productsCollection = collection(db, "digital_games");
 
 //Read All
 export const getProducts = async () => {
-  const snapshot = await getDocs(productsCollection);
+  try {
+    const snapshot = await getDocs(productsCollection);
 
-  const products = [];
+    const products = [];
 
-  snapshot.forEach((doc) => {
-    products.push({
-      id: doc.id,
-      ...doc.data(),
+    snapshot.forEach((doc) => {
+      products.push({
+        id: doc.id,
+        ...doc.data(),
+      });
     });
-  });
 
-  return products;
+    return products;
+  } catch (error) {
+    console.error("Error en el modelo con Firestore", error);
+
+    throw error;
+  }
 };
 
 //Read by ID
 export const getProductById = async (id) => {
-  const productRef = doc(productsCollection, id);
-  const snapshot = await getDoc(productRef);
+  try {
+    const productRef = doc(productsCollection, id);
+    const snapshot = await getDoc(productRef);
 
-  if (!snapshot.exists()) {
-    return null;
+    if (!snapshot.exists()) {
+      return null;
+    }
+    return {
+      id: snapshot.id,
+      ...snapshot.data(),
+    };
+  } catch (error) {
+    console.error("Error en el modelo con Firestore", error);
+
+    throw error;
   }
-  return {
-    id: snapshot.id,
-    ...snapshot.data(),
-  };
 };
 
 //Create
 export const createProduct = async (product) => {
-  const productRef = await addDoc(productsCollection, product);
+  try {
+    const productRef = await addDoc(productsCollection, product);
 
-  return {
-    id: productRef.id,
-    ...product,
-  };
+    return {
+      id: productRef.id,
+      ...product,
+    };
+  } catch (error) {
+    console.error("Error en el modelo con Firestore", error);
+
+    throw error;
+  }
 };
 
 //Update
 export const updateProduct = async (id, product) => {
-  const productRef = doc(productsCollection, id);
-  const snapshot = await getDoc(productRef);
+  try {
+    const productRef = doc(productsCollection, id);
+    const snapshot = await getDoc(productRef);
 
-  if (!snapshot.exists()) {
-    return null;
+    if (!snapshot.exists()) {
+      return null;
+    }
+
+    await updateDoc(productRef, product);
+
+    return {
+      id,
+      ...product,
+    };
+  } catch (error) {
+    console.error("Error en el modelo con Firestore", error);
+
+    throw error;
   }
-
-  await updateDoc(productRef, product);
-
-  return {
-    id,
-    ...product,
-  };
 };
 
 //Delete
 export const deleteProduct = async (id) => {
-  const productRef = doc(productsCollection, id);
-  const snapshot = await getDoc(productRef);
+  try {
+    const productRef = doc(productsCollection, id);
+    const snapshot = await getDoc(productRef);
 
-  if (!snapshot.exists()) {
-    return null;
+    if (!snapshot.exists()) {
+      return null;
+    }
+
+    const deletedProduct = {
+      id: snapshot.id,
+      ...snapshot.data(),
+    };
+    await deleteDoc(productRef);
+
+    return deletedProduct;
+  } catch (error) {
+    console.error("Error en el modelo con Firestore", error);
+
+    throw error;
   }
-
-  const deletedProduct = {
-    id: snapshot.id,
-    ...snapshot.data(),
-  };
-  await deleteDoc(productRef);
-
-  return deletedProduct;
 };

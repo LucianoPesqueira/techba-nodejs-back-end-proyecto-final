@@ -1,5 +1,7 @@
 import { Router } from "express";
 
+const router = Router();
+
 import {
   getAllProducts,
   getProductById,
@@ -8,13 +10,13 @@ import {
   deleteProduct,
 } from "../controllers/products.controller.js";
 
-const router = Router();
+import { auth } from "../middlewares/auth.middleware.js";
 
 //prefijo: /api/products
 router.get("/", getAllProducts);
 router.get("/:id", getProductById);
-router.post("/", createProduct);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.post("/", auth, createProduct);
+router.put("/:id", auth, updateProduct);
+router.delete("/:id", auth, deleteProduct);
 
 export default router;

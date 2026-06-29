@@ -46,12 +46,6 @@ export const createProduct = async (req, res) => {
   try {
     const { title, description, price, category } = req.body;
 
-    // if (!title || !description || !price || !category) {
-    //   return res.status(422).json({
-    //     message: "Faltan datos obligatorios",
-    //   });
-    // }
-
     if (title !== undefined) {
       if (typeof title !== "string" || title.trim() === "") {
         return res.status(422).json({
